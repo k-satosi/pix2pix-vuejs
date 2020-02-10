@@ -13,8 +13,8 @@
 
 <script>
 // @ is an alias to /src
-import Canvas from '@/components/Canvas.vue'
-import ml5 from 'ml5'
+import Canvas from '@/components/Canvas.vue';
+import ml5 from 'ml5';
 
 export default {
   name: 'home',
@@ -22,7 +22,7 @@ export default {
     Canvas,
   },
   methods: {
-    modelLoaded: function() {
+    modelLoaded() {
       console.log('model loaded');
 
       this.transfer();
@@ -30,18 +30,19 @@ export default {
     clear() {
       console.log('clear');
 
-      let canvas = this.$refs.canvas;
+      const { canvas } = this.$refs;
       canvas.clear();
 
-      let transfer = this.$refs.transfer;
+      const { transfer } = this.$refs;
       transfer.clear();
     },
     reset() {
-      let img = new Image();
-      img.src = require('@/assets/xxx.png');
-      img.addEventListener('load', function() {
+      const img = new Image();
+      // eslint-disable-next-line global-require
+      img.src = require('@/assets/cat.png');
+      img.addEventListener('load', () => {
         this.$refs.canvas.drawImage(img);
-      }.bind(this));
+      });
     },
     transfer() {
       const SIZE = 256;
@@ -49,23 +50,22 @@ export default {
       console.log('transfer');
 
       let isTransfering = true;
-      let canvasElement = this.$refs.canvas.$el;
+      const canvasElement = this.$refs.canvas.$el;
 
-      this.pix2pix.transfer(canvasElement, function(err, result) {
+      this.pix2pix.transfer(canvasElement, (err, result) => {
         if (err) {
           console.log(err);
         }
         if (result && result.src) {
           isTransfering = false;
-          let img = new Image();
-          img.src = result.src; 
-          img.addEventListener("load", function() {
+          const img = new Image();
+          img.src = result.src;
+          img.addEventListener('load', () => {
             this.$refs.transfer.drawImage(img);
-          }.bind(this));
-
+          });
         }
-      }.bind(this));
-    }
+      });
+    },
   },
   mounted() {
     console.log('mounted');
@@ -73,5 +73,5 @@ export default {
     this.reset();
     this.pix2pix = ml5.pix2pix('edges2cats_AtoB.pict', this.modelLoaded);
   },
-}
+};
 </script>

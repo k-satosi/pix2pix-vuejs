@@ -1,4 +1,5 @@
 <template>
+  <!-- eslint-disable-next-line max-len -->
   <canvas v-bind:style='canvasStyle' @mousedown="mousedown" @mouseup="mouseup" @mousemove="mousemove" ref='canvas'></canvas>
 </template>
 
@@ -6,13 +7,13 @@
 export default {
   props: ['size'],
   computed: {
-    canvasStyle: function () {
+    canvasStyle() {
       return {
-        'width': this.size + 'px',
-        'height': this.size + 'px',
-        'border': '1px solid #000',
-        'margin': '4px',
-      }
+        width: `${this.size}px`,
+        height: `${this.size}px`,
+        border: '1px solid #000',
+        margin: '4px',
+      };
     },
   },
   methods: {
@@ -26,38 +27,38 @@ export default {
     image() {
       return this.ctx.getImageData(0, 0, this.size, this.size);
     },
-    mousedown: function(event) {
+    mousedown(event) {
       this.paint = true;
       this.ox = event.clientX - event.target.getBoundingClientRect().left;
       this.oy = event.clientY - event.target.getBoundingClientRect().top;
     },
-    mouseup: function(event) {
+    mouseup(event) {
       this.paint = false;
     },
-    mousemove: function(event) {
+    mousemove(event) {
       if (this.paint) {
-        let x = event.clientX - event.target.getBoundingClientRect().left;
-        let y = event.clientY - event.target.getBoundingClientRect().top;
+        const x = event.clientX - event.target.getBoundingClientRect().left;
+        const y = event.clientY - event.target.getBoundingClientRect().top;
         this.drawLine(this.ox, this.oy, x, y);
         this.ox = x;
         this.oy = y;
       }
     },
-    drawLine: function(ox, oy, x, y) {
+    drawLine(ox, oy, x, y) {
       this.ctx.beginPath();
       this.ctx.moveTo(ox, oy);
       this.ctx.lineTo(x, y);
       this.ctx.stroke();
-    }
+    },
   },
   mounted() {
-    this.ctx = this.$el.getContext('2d')
+    this.ctx = this.$el.getContext('2d');
     this.ox = 0;
     this.oy = 0;
     this.$refs.canvas.width = this.size;
     this.$refs.canvas.height = this.size;
-  }
-}
+  },
+};
 </script>
 
 <style scoped>
