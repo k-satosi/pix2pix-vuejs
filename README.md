@@ -1,4 +1,4 @@
-# cat-generator
+# pix2pix-vuejs
 
 ## Project setup
 ```
