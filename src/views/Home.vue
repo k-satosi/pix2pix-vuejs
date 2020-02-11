@@ -4,9 +4,9 @@
     <Canvas size=256 ref="canvas"/>
     <Canvas size=256 ref="transfer"/>
     <div id="buttonContainer">
-      <button v-on:click="clear">Clear</button>
-      <button v-on:click="reset">Reset</button>
-      <button v-on:click="transfer" id="transferButton">Transfer</button>
+      <button v-on:click="clear" class="button">Clear</button>
+      <button v-on:click="reset" class="button">Reset</button>
+      <button v-on:click="transfer" id="transferButton" class="button">Transfer</button>
     </div>
   </div>
 </template>
@@ -75,3 +75,18 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.button {
+  font-size: 1.0em;
+  font-weight: bold;
+  color: #fff;
+  border-style: none;
+  background-color: rgb(34, 100, 221);
+  padding: 5px 10px;
+  margin: 5px;
+  box-shadow: 2px 2px 3px 1px #888;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+</style>
